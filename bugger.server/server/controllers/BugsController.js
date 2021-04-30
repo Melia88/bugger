@@ -1,5 +1,6 @@
 import { Auth0Provider } from '@bcwdev/auth0provider'
 import { bugsService } from '../services/BugsService'
+import { notesService } from '../services/notesService'
 import BaseController from '../utils/BaseController'
 
 export class BugsController extends BaseController {
@@ -8,11 +9,21 @@ export class BugsController extends BaseController {
     this.router
     // NOTE: Beyond this point all routes require Authorization tokens (the user must be logged in)
       .get('', this.getAll)
-      .use(Auth0Provider.getAuthorizedUserInfo)
       .get('/:id', this.getBugById)
+      .get('/:id/notes', this.getNotesByBugId)
+      .use(Auth0Provider.getAuthorizedUserInfo)
       .post('', this.create)
       .put('/:id', this.edit)
       .delete('/:id', this.deleteBugClosed)
+  }
+
+  async getNotesByBugId(req, res, next) {
+    try {
+      const notes = await notesService.getNotesByBugId(req.params.id)
+      res.send(notes)
+    } catch (error) {
+      next(error)
+    }
   }
 
   async deleteBugClosed(req, res, next) {
@@ -49,7 +60,7 @@ export class BugsController extends BaseController {
 
   async getBugById(req, res, next) {
     try {
-      const data = await bugsService.findOne({ _id: req.params.id, creatorId: req.userInfo.id })
+      const data = await bugsService.findOne({ _id: req.params.id })
       return res.send(data)
     } catch (error) {
       next(error)
@@ -58,7 +69,7 @@ export class BugsController extends BaseController {
 
   async getAll(req, res, next) {
     try {
-      const data = await bugsService.find({ creatorId: req.userInfo.id })
+      const data = await bugsService.find()
       return res.send(data)
     } catch (error) {
       next(error)
