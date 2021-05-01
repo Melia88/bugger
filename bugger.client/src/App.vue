@@ -27,4 +27,10 @@ export default {
 <style lang="scss">
 @import "./assets/scss/main.scss";
 
+img{
+    height: 45px;
+    width: 45px;
+    border-radius: 50%;
+  }
+
 </style>

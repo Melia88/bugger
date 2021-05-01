@@ -3,6 +3,12 @@ import { logger } from '../utils/Logger'
 import { api } from './AxiosService'
 
 class BugsService {
+  async getActiveBug(bugId) {
+    const res = await api.get('api/bugs/' + bugId)
+    AppState.activeBug = res.data
+    logger.log(res.data)
+  }
+
   async getAllBugs() {
     try {
       const res = await api.get('api/bugs')
@@ -14,8 +20,10 @@ class BugsService {
   }
 
   async createBug(body) {
-    const res = await api.post('api/bugs', body)
-    AppState.bugs = [...AppState.bugs, res.data]
+    await api.post('api/bugs', body)
+    // AppState.bugs.push(res.data)
+    // AppState.bugs = [...AppState.bugs, res.data]
+    this.getAllBugs()
   }
 }
 
