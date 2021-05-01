@@ -69,7 +69,7 @@ export class BugsController extends BaseController {
 
   async getAll(req, res, next) {
     try {
-      const data = await bugsService.find()
+      const data = await bugsService.find(req.query)
       return res.send(data)
     } catch (error) {
       next(error)

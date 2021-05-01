@@ -1,25 +1,157 @@
 <template>
-  <div class="home flex-grow-1 d-flex flex-column align-items-center justify-content-center">
-    <img src="https://bcw.blob.core.windows.net/public/img/8600856373152463" alt="CodeWorks Logo">
-    <h1 class="my-5 bg-dark text-light p-3 rounded d-flex align-items-center">
-      <span class="mx-2 text-white">Vue 3 Starter</span>
-    </h1>
+  <div class="home">
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-12 mt-3">
+          <div class="bug-page">
+            <!-- v-if="state.bugs" -->
+            <!-- <span class="ml-4">Report a Bug</span> -->
+            <form class="form-inline" @submit.prevent="createBug">
+              <h3>Current Bugs</h3>
+              <div class="form-group mx-sm-3 mb-2">
+                <input type="text"
+                       class="form-control"
+                       id="bug-title"
+                       placeholder="Report a Bug..."
+                       v-model="state.newBug.title"
+                       required
+                >
+                <input type="text"
+                       class="form-control"
+                       id="bug-description"
+                       placeholder="Bug Description..."
+                       v-model="state.newBug.description"
+                       required
+                >
+              </div>
+              <button type="submit" title="Report a Bug" class="btn btn-dark mb-2 action">
+                <i class="fa fa-plus font-weight-bold" aria-hidden="true"></i>
+              </button>
+            </form>
+          </div>
+        </div>
+        <!-- {{ state.boards }} -->
+      </div>
+    <!-- <div class="row justify-content-around">
+      <BoardComponent v-for="board in state.boards" :key="board.id" :board="board" />
+    </div> -->
+    </div>
+    <div class="row">
+      <div class="col-md-12 mt-3">
+        <div class="card mx-4">
+          <div class="card-body">
+            <h1 class="card-title  content">
+              <div class="ml-2 div flexCol">
+                Title
+              </div><div class="div flexCol">
+                Reported By
+              </div><div class="div flexCol">
+                Status
+              </div><div class="mr-1 div flexCol">
+                Last Modified
+              </div>
+            </h1>
+          </div>
+          <div class="closedCheckbox">
+            <input class="m-2" type="checkbox" id="changeClosed" name="changeClosed">
+            <span class="changeClosed "> Hide Closed</span><br>
+          </div>
+          <div class="mx-4 bg-white shadow content-box locked-scroll">
+            <BugsComponent v-for="bug in state.bugs" :key="bug.id" :bug="bug" />
+            <!--  v-for="bug in state.bugs" :key="bug.id" :bug="bug" -->
+            <!-- Inject BugsComponent here -->
+            <!-- {{ state.bugs }} -->
+            <!-- {{ state.bugs.description }} -->
+          </div>
+        </div>
+
+        <!-- <div class="mx-4 bg-white shadow content-box-top">
+          <span class="ml-2">Title </span><span> Reported By</span><span> Status(open/closed)</span><span class="mr-1">Last Modified</span>
+        </div> -->
+        <!-- Inject BugsComponent here -->
+      </div>
+    </div>
   </div>
 </template>
 
 <script>
+import { computed, onMounted, reactive } from 'vue'
+import { AppState } from '../AppState'
+import { bugsService } from '../services/BugsService'
+import Notification from '../utils/Notification'
+import { useRoute } from 'vue-router'
 export default {
-  name: 'Home'
+  name: 'Home',
+  setup() {
+    const route = useRoute()
+    const state = reactive({
+      newBug: {},
+      bugs: computed(() => AppState.bugs)
+    })
+    onMounted(async() => {
+      try {
+        await bugsService.getAllBugs()
+      } catch (error) {
+        Notification.toast('Error: ' + error, 'error')
+      }
+    })
+    return {
+      state,
+      route,
+      async createBug() {
+        try {
+          await bugsService.createBug(state.newBug)
+          Notification.toast('Bug Successfully Reported!', 'success')
+          state.newBug = {}
+        } catch (error) {
+          Notification.toast('Error: ' + error, 'error')
+        }
+      }
+    }
+  }
+
 }
+
 </script>
 
 <style scoped lang="scss">
-.home{
-  text-align: center;
-  user-select: none;
-  > img{
-    height: 200px;
-    width: 200px;
-  }
+
+.card{
+  box-sizing: border-box;
+  border: 1px solid;
+  border-color: black black red black;
+
 }
+// span + span {
+//     margin-left: 180px;
+// }
+.content-box{
+  box-sizing: border-box;
+  border: 1px solid;
+  // border-radius: 20px ;
+  // outline-style: solid;
+  outline-color: black;
+}
+
+.content {
+  display: flex;
+  width: 100%;
+}
+.flexCol {
+  box-sizing: border-box;
+  padding: 10px;
+  width: 33.3%;
+  background: #ffe2e0;
+}
+/* (B) BREAK DOWN 1 COLUMN ON SMALL SCREENS */
+@media only screen and (max-width: 768px) {
+  .content { flex-wrap: wrap; }
+  .flexCol { width: 100%; }
+}
+
+.locked-scroll {
+  height: 100vh;
+  overflow-y: scroll;
+}
+
 </style>
