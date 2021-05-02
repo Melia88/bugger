@@ -38,6 +38,15 @@ class BugsService {
   // async editBugDetails(bug) {
   //   await api.put('api/bugs/' + bug.id, bug.description, bug.title)
   // }
+
+  async sortClosed() {
+    await api.get('api/bugs')
+    if (document.getElementById('changeClosed').checked) {
+      AppState.bugs = AppState.bugs.filter(bug => bug.closed !== true)
+    } else {
+      this.getAllBugs()
+    }
+  }
 }
 
 export const bugsService = new BugsService()

@@ -46,7 +46,7 @@
           Notes
           <button title="Add a Note"
                   type="button"
-                  class="btn btn-success text-light"
+                  class="btn btn-outline-success text-dark"
                   data-toggle="modal"
                   data-target="#new-note-form"
           >

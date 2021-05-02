@@ -87,6 +87,7 @@ export default {
       state,
       async createBug() {
         try {
+          state.newBug.closedDate = null
           await bugsService.createBug(state.newBug)
           state.newBug = {}
           $('#new-bug-form').modal('hide')
