@@ -1,7 +1,7 @@
 <template>
   <div class="container-fluid">
     <div class="row" v-if="state.activeBug">
-      <div class="col-md-12 ml-3 mt-2">
+      <div class="col-md-9 ml-3 mt-2">
         <div class="bug-details-page">
           <div class="div">
             Title
@@ -10,33 +10,44 @@
             <span>{{ state.activeBug.title }}</span>
           </div>
 
-          <div class="rounded-circle">
-            <img :src="state.activeBug.creator.picture" alt="Bug Creators Photo">
+          <div class="">
+            <p>
+              Reported by: <img class="rounded-circle" :src="state.activeBug.creator.picture" alt="Bug Creators Photo">
+              <span class="activeBug-creator-name ml-2"> {{ state.activeBug.creator.name }} </span>
+            </p>
           </div>
-          <div>
-            <p> Reported by:  <span class="activeBug-creator-name"> {{ state.activeBug.creator.name }} </span></p>
-          </div>
+        </div>
+      </div>
+      <div class="col-2 mt-4 align-items-end">
+        <button type="button" class="btn btn-outline-dark">
+          <!-- @click="closeBug" -->
+          close
+        </button>
+        <div>
+          status: {{ state.activeBug.closed }}
         </div>
       </div>
       <div class=" col-md-12 mt-3">
         <div class="mx-4 content-box bg-white shadow locked-scroll">
-          {{ state.activeBug.description }}
+          <span class="ml-2 mt-2"> {{ state.activeBug.description }} </span>
         </div>
       </div>
     </div>
 
     <div class="row" v-if="state.notes">
-      <div class="col  py-3">
-        Notes
-        <button title="Add a Note"
-                type="button"
-                class="btn btn-success text-light"
-                data-toggle="modal"
-                data-target="#new-note-form"
-        >
-          <!-- v-if="state.user.isAuthenticated" -->
-          Add
-        </button>
+      <div class="col py-3">
+        <div class="note-tag">
+          Notes
+          <button title="Add a Note"
+                  type="button"
+                  class="btn btn-success text-light"
+                  data-toggle="modal"
+                  data-target="#new-note-form"
+          >
+            <!-- v-if="state.user.isAuthenticated" -->
+            <span> Add </span>
+          </button>
+        </div>
         <CreateNoteModal />
       </div>
       <div class="col-md-12 mb-4">
@@ -110,6 +121,7 @@ export default {
 }
 .activeBug-creator-name{
   font-size: 1.5rem;
+
 }
 
 .content {
@@ -125,5 +137,11 @@ export default {
 @media only screen and (max-width: 768px) {
   .content { flex-wrap: wrap; }
   .flexCol { width: 100%; }
+}
+.note-tag{
+  font-size: 1.5rem;
+}
+.locked-scroll {
+  overflow-y: scroll;
 }
 </style>

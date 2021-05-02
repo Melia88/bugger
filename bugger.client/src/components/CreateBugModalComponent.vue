@@ -17,6 +17,11 @@
           </button>
         </div>
         <form @submit.prevent="createBug">
+          <div class="col-md-12 modal-body ml-3">
+            <div class="row">
+              Reported By: {{ state.user.name }}
+            </div>
+          </div>
           <div class="modal-body">
             <div class="form-group">
               <label for="title">Title</label>
@@ -30,13 +35,7 @@
               >
             </div>
           </div>
-          <div class=" bug-info">
-            <small>
-              Reported By:
-              <img :src="state.user.picture" alt="">
-              {{ state.user.name }}
-            </small>
-          </div>
+
           <div class="form-group">
             <label for="description">Description</label>
             <textarea type="text"
@@ -67,6 +66,7 @@
 import { reactive, computed } from 'vue'
 import { bugsService } from '../services/BugsService'
 import { AppState } from '../AppState'
+import Notification from '../utils/Notification'
 import $ from 'jquery'
 export default {
   name: 'CreateBugModalComponent',

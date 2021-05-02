@@ -4,12 +4,12 @@
       <div>
         <div class="card-body content">
           <div class="div flexCol">
-            <!-- {{ note.creator.name }} -->
+            {{ note.creator }}
           </div>
           <div class="div flexCol">
             {{ note.body }}
           </div>
-          <div>
+          <div class="div flexCol">
             <i class="fas fa-trash-alt" @click="deleteNote" v-if="state.user.isAuthenticated && state.account.id === note.creatorId"></i>
           </div>
         </div>

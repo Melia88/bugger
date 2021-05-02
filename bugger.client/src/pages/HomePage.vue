@@ -41,20 +41,12 @@
           <div class="closedCheckbox">
             <input class="m-2" type="checkbox" id="changeClosed" name="changeClosed">
             <span class="changeClosed "> Hide Closed</span><br>
+            <!-- need @click="sortClosed" -->
           </div>
           <div class="mx-4 bg-white shadow content-box locked-scroll">
             <BugsComponent v-for="bug in state.bugs" :key="bug.id" :bug="bug" />
-          <!--  v-for="bug in state.bugs" :key="bug.id" :bug="bug" -->
-          <!-- Inject BugsComponent here -->
-          <!-- {{ state.bugs }} -->
-          <!-- {{ state.bugs.description }} -->
           </div>
         </div>
-
-      <!-- <div class="mx-4 bg-white shadow content-box-top">
-          <span class="ml-2">Title </span><span> Reported By</span><span> Status(open/closed)</span><span class="mr-1">Last Modified</span>
-        </div> -->
-      <!-- Inject BugsComponent here -->
       </div>
     </div>
   </div>

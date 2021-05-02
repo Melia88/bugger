@@ -7,6 +7,7 @@
             {{ bug.title }}
           </div>
           <div class="div flexCol">
+            <img class="rounded-circle" :src="bug.creator.picture" alt="Bug Creators Photo">
             {{ bug.creator.name }}
           </div>
           <div class="div flexCol">
@@ -68,4 +69,9 @@ export default {
   .content { flex-wrap: wrap; }
   .flexCol { width: 100%; }
 }
+img{
+    height: 20px;
+    width: 20px;
+    border-radius: 50%;
+  }
 </style>
