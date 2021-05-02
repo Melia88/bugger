@@ -27,6 +27,17 @@ class BugsService {
     router.push({ name: 'BugDetailsPage', params: { id: res.data.id } })
     this.getAllBugs()
   }
+
+  // async sortClosed(bugsId) {
+  //   const res = await api.get(`api/bugs/${bugsId}/closed`)
+  //   AppState.bugs.find(b => b.id === bugsId)
+  //   bugs.closed = res.data.closed
+  //   this.getAllBugs()
+  // }
+
+  // async editBugDetails(bug) {
+  //   await api.put('api/bugs/' + bug.id, bug.description, bug.title)
+  // }
 }
 
 export const bugsService = new BugsService()

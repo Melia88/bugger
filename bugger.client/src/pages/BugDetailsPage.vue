@@ -24,7 +24,13 @@
           close
         </button>
         <div>
-          status: {{ state.activeBug.closed }}
+          status:
+          <span v-if="state.activeBug.closed" class="font-weight-bold text-danger">
+            Closed
+          </span>
+          <span v-else class="text-success">
+            Open
+          </span>
         </div>
       </div>
       <div class=" col-md-12 mt-3">

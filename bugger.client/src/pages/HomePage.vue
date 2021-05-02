@@ -40,6 +40,7 @@
           </div>
           <div class="closedCheckbox">
             <input class="m-2" type="checkbox" id="changeClosed" name="changeClosed">
+            <!-- @click="sortClosed(bugs)" -->
             <span class="changeClosed "> Hide Closed</span><br>
             <!-- need @click="sortClosed" -->
           </div>
@@ -78,6 +79,13 @@ export default {
     return {
       state,
       route,
+      // async sortClosed(bugs) {
+      //   try {
+      //     await bugsService.sortClosed(bugs.id)
+      //   } catch (error) {
+      //     Notification.toast('Error: ' + error, ' error')
+      //   }
+      // },
       async createBug() {
         try {
           await bugsService.createBug(state.newBug)

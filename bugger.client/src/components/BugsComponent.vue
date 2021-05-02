@@ -11,7 +11,12 @@
             {{ bug.creator.name }}
           </div>
           <div class="div flexCol">
-            {{ bug.closed }}
+            <span v-if="bug.closed" class="font-weight-bold text-danger">
+              Closed
+            </span>
+            <span v-else class="text-success">
+              Open
+            </span>
           </div>
           <div class="div flexCol">
             {{ new Date ( bug.updatedAt).toLocaleString(en, time) }}
@@ -62,7 +67,7 @@ export default {
   box-sizing: border-box;
   padding: 10px;
   width: 33.3%;
-  background: #ffe2e0;
+  background: #ffe2e06b;
 }
 /* (B) BREAK DOWN 1 COLUMN ON SMALL SCREENS */
 @media only screen and (max-width: 768px) {
@@ -74,4 +79,7 @@ img{
     width: 20px;
     border-radius: 50%;
   }
+a{
+color: black;
+}
 </style>

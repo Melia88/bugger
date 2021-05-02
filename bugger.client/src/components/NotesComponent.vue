@@ -4,7 +4,8 @@
       <div>
         <div class="card-body content">
           <div class="div flexCol">
-            {{ note.creator }}
+            <img :src="note.creator.picture" alt="">
+            {{ note.creator.name }}
           </div>
           <div class="div flexCol">
             {{ note.body }}
@@ -72,7 +73,7 @@ export default {
   box-sizing: border-box;
   padding: 10px;
   width: 33.3%;
-  background: rgba(151, 151, 151, 0.568);
+  background: rgba(156, 156, 156, 0.198);
 }
 /* (B) BREAK DOWN 1 COLUMN ON SMALL SCREENS */
 @media only screen and (max-width: 768px) {
