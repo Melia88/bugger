@@ -24,11 +24,47 @@
         </div>
       </div>
     </div>
+
+    <div class="row" v-if="state.notes">
+      <div class="col  py-3">
+        Notes
+        <button title="Add a Note"
+                type="button"
+                class="btn btn-success text-light"
+                data-toggle="modal"
+                data-target="#new-note-form"
+        >
+          <!-- v-if="state.user.isAuthenticated" -->
+          Add
+        </button>
+        <CreateNoteModal />
+      </div>
+      <div class="col-md-12 mb-4">
+        <div class="mx-4 content-box bg-white shadow">
+          <div class="card-header">
+            <h4 class="card-title  content">
+              <div class="ml-2 div flexCol">
+                Name
+              </div><div class="div flexCol">
+                Message
+              </div><div class="div flexCol">
+                Delete
+              </div>
+            </h4>
+          </div>
+          <div class="list-group list-group-flush">
+            <NotesComponent v-for="note in state.notes" :key="note.id" :note="note" :bug="bug" />
+            <!-- inject the notes component here -->
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
 </template>
 
 <script>
 import { bugsService } from '../services/BugsService'
+import { notesService } from '../services/NotesService'
 import { computed, onMounted, reactive } from 'vue'
 import { AppState } from '../AppState'
 import { useRoute } from 'vue-router'
@@ -38,13 +74,18 @@ export default {
     const route = useRoute()
     const state = reactive({
       // newNote: {},
-      activeBug: computed(() => AppState.activeBug)
-      // notes: computed(() => AppState.notes)
-      // account: computed(() => AppState.account),
-      // user: computed(() => AppState.user)
+      activeBug: computed(() => AppState.activeBug),
+      notes: computed(() => AppState.notes),
+      account: computed(() => AppState.account),
+      user: computed(() => AppState.user)
     })
     onMounted(async() => {
-      await bugsService.getActiveBug(route.params.id)
+      try {
+        await bugsService.getActiveBug(route.params.id)
+        await notesService.getNotes(route.params.id)
+      } catch (error) {
+        Notification.toast('error:' + error, 'warning')
+      }
     })
     return {
       route,
@@ -69,5 +110,20 @@ export default {
 }
 .activeBug-creator-name{
   font-size: 1.5rem;
+}
+
+.content {
+  display: flex;
+  width: 100%;
+}
+.flexCol {
+  box-sizing: border-box;
+  padding: 10px;
+  width: 33.3%;
+}
+/* (B) BREAK DOWN 1 COLUMN ON SMALL SCREENS */
+@media only screen and (max-width: 768px) {
+  .content { flex-wrap: wrap; }
+  .flexCol { width: 100%; }
 }
 </style>

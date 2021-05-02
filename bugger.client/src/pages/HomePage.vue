@@ -92,7 +92,7 @@ export default {
           Notification.toast('Bug Successfully Reported!', 'success')
           state.newBug = {}
         } catch (error) {
-          Notification.toast('Error: ' + error, 'error')
+          Notification.toast('Error: ' + error, 'warning')
         }
       }
     }
