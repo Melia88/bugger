@@ -10,7 +10,7 @@
           <div class="div flexCol">
             {{ note.body }}
           </div>
-          <div class="div flexCol">
+          <div class="div flexCol action" title="Click to Delete Note">
             <i class="fas fa-trash-alt" @click="deleteNote" v-if="state.user.isAuthenticated && state.account.id === note.creatorId"></i>
           </div>
         </div>
@@ -79,5 +79,9 @@ export default {
 @media only screen and (max-width: 768px) {
   .content { flex-wrap: wrap; }
   .flexCol { width: 100%; }
+}
+
+.action{
+  cursor: pointer;
 }
 </style>

@@ -1,6 +1,6 @@
 <template>
   <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-    <router-link class="navbar-brand d-flex" :to="{ name: 'Home' }">
+    <router-link class="navbar-brand d-flex" :to="{ name: 'Home' }" title="Go to Home">
       <div class="d-flex flex-column align-items-center">
         <i class="fas fa-bug fa-2x">Bug Log</i>
       </div>
@@ -19,7 +19,7 @@
     <div class="collapse navbar-collapse" id="navbarText">
       <ul class="navbar-nav mr-auto">
         <li class="nav-item">
-          <router-link :to="{ name: 'Home' }" class="nav-link">
+          <router-link :to="{ name: 'Home' }" class="nav-link" title="Go to Home">
             Home
           </router-link>
         </li>
@@ -28,11 +28,11 @@
             Bug Reports
           </router-link>
         </li> -->
-        <li class="nav-item">
+        <!-- <li class="nav-item">
           <router-link :to="{ name: 'About' }" class="nav-link">
             About
           </router-link>
-        </li>
+        </li> -->
       </ul>
       <span class="navbar-text">
         <button

@@ -38,8 +38,14 @@
               </div>
             </h1>
           </div>
-          <div class="closedCheckbox">
-            <input class="m-2" type="checkbox" id="changeClosed" name="changeClosed" @click="sortClosed">
+          <div class="closedCheckbox text-right mr-5">
+            <input class="action m-2"
+                   type="checkbox"
+                   id="changeClosed"
+                   name="changeClosed"
+                   title="Hide Closed"
+                   @click="sortClosed"
+            >
             <!-- @click="sortClosed(bugs)" -->
             <span class="changeClosed "> Hide Closed</span><br>
             <!-- need @click="sortClosed" -->
@@ -140,6 +146,10 @@ export default {
 .locked-scroll {
   height: 100vh;
   overflow-y: scroll;
+}
+
+.action{
+  cursor: pointer;
 }
 
 </style>

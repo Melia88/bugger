@@ -19,7 +19,7 @@
         </div>
       </div>
       <div class="col-2 mt-4 align-items-end">
-        <button type="button" class="btn btn-outline-dark" v-if="state.activeBug.closed === false" @click="closeBug">
+        <button type="button" class="btn btn-outline-dark" v-if="state.activeBug.closed === false" @click="closeBug" title="Click to Close Bug">
           <!-- @click="closeBug" -->
           close
         </button>
