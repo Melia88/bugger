@@ -1,6 +1,7 @@
 import { AppState } from '../AppState'
 import router from '../router'
 import { logger } from '../utils/Logger'
+import Notification from '../utils/Notification'
 import { api } from './AxiosService'
 
 class BugsService {
@@ -45,6 +46,15 @@ class BugsService {
       AppState.bugs = AppState.bugs.filter(bug => bug.closed !== true)
     } else {
       this.getAllBugs()
+    }
+  }
+
+  async closeBug(activeBug, bugId) {
+    await api.delete('api/bugs/' + bugId)
+    if (activeBug.closed === false) {
+      AppState.activeBug.closed = true
+    } else {
+      Notification.toast('YOU CANNOT DO THAT')
     }
   }
 }

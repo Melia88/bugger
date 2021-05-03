@@ -19,7 +19,7 @@
         </div>
       </div>
       <div class="col-2 mt-4 align-items-end">
-        <button type="button" class="btn btn-outline-dark">
+        <button type="button" class="btn btn-outline-dark" v-if="state.activeBug.closed === false" @click="closeBug">
           <!-- @click="closeBug" -->
           close
         </button>
@@ -85,6 +85,7 @@ import { notesService } from '../services/NotesService'
 import { computed, onMounted, reactive } from 'vue'
 import { AppState } from '../AppState'
 import { useRoute } from 'vue-router'
+import Notification from '../utils/Notification'
 export default {
   name: 'BugDetailsPage',
   setup() {
@@ -106,7 +107,17 @@ export default {
     })
     return {
       route,
-      state
+      state,
+      async closeBug() {
+        try {
+          if (await Notification.confirmAction('Are you sure?', "You won't be able to revert this!", 'warning', 'Yes, close bug!')) {
+            await bugsService.closeBug(state.activeBug, state.activeBug.id)
+            // Notification.toast('Successfully Closed Bug', 'success')
+          }
+        } catch (error) {
+          Notification.toast('Error: ' + error, 'error')
+        }
+      }
     }
   },
   components: {}
