@@ -23,10 +23,15 @@
     </div> -->
     </div>
     <div class="row">
-      <div class="col-md-12 mt-3">
-        <div class="card mx-4">
+      <div class="col-md-12 the-box mt-3">
+        <div class="mx-4">
           <div class="card-body">
-            <h1 class="card-title  content">
+            <!-- md means med screen or above block is the default for showing an item none means do not show-->
+            <div class="on-mobile d-md-none d-block ml-2 div flexCol">
+              Bugs
+            </div>
+
+            <h1 class="card-title content">
               <div class="ml-2 div flexCol">
                 Title
               </div><div class="div flexCol">
@@ -139,8 +144,17 @@ export default {
 }
 /* (B) BREAK DOWN 1 COLUMN ON SMALL SCREENS */
 @media only screen and (max-width: 768px) {
-  .content { flex-wrap: wrap; }
+  // .content { flex-wrap: wrap; }
   .flexCol { width: 100%; }
+  // h1 { font-size: .85rem;}
+  .content { display: none; }
+  // .content-box{ min-width: 75vw;}
+  // .the-box { margin:0%;}
+  // .box-card { margin:1%;}
+}
+.on-mobile{
+  font-size: 1.5rem;
+  font-weight: bold;
 }
 
 .locked-scroll {

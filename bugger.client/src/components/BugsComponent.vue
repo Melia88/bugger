@@ -19,7 +19,7 @@
             </span>
           </div>
           <div class="div flexCol">
-            {{ new Date ( bug.updatedAt).toLocaleString(en, time) }}
+            {{ new Date ( bug.updatedAt).toLocaleString('en', 'time') }}
           </div>
         </div>
       </div>

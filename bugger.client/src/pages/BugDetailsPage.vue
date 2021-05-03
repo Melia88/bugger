@@ -1,12 +1,24 @@
 <template>
   <div class="container-fluid">
     <div class="row" v-if="state.activeBug">
-      <div class="col-md-9 ml-3 mt-2">
+      <div class="col-md-7 ml-3 mt-2">
         <div class="bug-details-page">
           <div class="div">
             Title
           </div>
-          <div class="activeBug-title">
+          <textarea type="text"
+                    v-if="state.edit && state.activeBug.closed === false && state.account.id === state.activeBug.creatorId"
+                    class="form-control"
+                    id="title"
+                    placeholder="Title..."
+                    minlength="3"
+                    v-model="state.activeBug.title"
+                    required
+          >
+              </textarea>
+
+          <div v-else class="activeBug-title">
+            <!-- make this an input based on button click -->
             <span>{{ state.activeBug.title }}</span>
           </div>
 
@@ -17,6 +29,23 @@
             </p>
           </div>
         </div>
+      </div>
+      <div class="col-2 mt-4 align-items-end">
+        <button type="button" class="btn btn-outline-dark" v-if="state.activeBug.closed === false && state.account.id === state.activeBug.creatorId" @click="state.edit = true" title="Click to Close Bug">
+          <!-- @click="editBug" -->
+          Edit Bug
+        </button>
+        <button type="button"
+                class="btn btn-outline-success mt-2"
+                v-if="state.edit"
+
+                title="Click to Save Changes"
+                @click="saveEdit"
+        >
+          <!-- @click="editBug" -->
+          Save Changes
+        </button>
+        <!--  || state.saved = true -->
       </div>
       <div class="col-2 mt-4 align-items-end">
         <button type="button" class="btn btn-outline-dark" v-if="state.activeBug.closed === false" @click="closeBug" title="Click to Close Bug">
@@ -35,13 +64,25 @@
       </div>
       <div class=" col-md-12 mt-3">
         <div class="mx-4 content-box bg-white shadow locked-scroll">
-          <span class="ml-2 mt-2"> {{ state.activeBug.description }} </span>
+          <textarea type="text"
+                    v-if="state.edit && state.activeBug.closed === false && state.account.id === state.activeBug.creatorId"
+                    class="edittext form-control"
+                    id="title"
+                    placeholder="Title..."
+                    minlength="3"
+                    v-model="state.activeBug.description"
+                    required
+          >
+              </textarea>
+
+          <!-- make this an input based on button click -->
+          <span v-else class="ml-2 mt-2"> {{ state.activeBug.description }} </span>
         </div>
       </div>
     </div>
-
+    <!-- End of bug -->
     <div class="row" v-if="state.notes">
-      <div class="col py-3">
+      <div class="col ml-3 py-3">
         <div class="note-tag">
           Notes
           <button title="Add a Note"
@@ -59,6 +100,9 @@
       <div class="col-md-12 mb-4">
         <div class="mx-4 content-box bg-white shadow">
           <div class="card-header">
+            <div class="on-mobile d-md-none d-block ml-2 div">
+              Bug's Notes
+            </div>
             <h4 class="card-title  content">
               <div class="ml-2 div flexCol">
                 Name
@@ -70,7 +114,7 @@
             </h4>
           </div>
           <div class="list-group list-group-flush">
-            <NotesComponent v-for="note in state.notes" :key="note.id" :note="note" :bug="bug" />
+            <NotesComponent v-for="note in state.notes" :key="note.id" :note="note" />
             <!-- inject the notes component here -->
           </div>
         </div>
@@ -95,7 +139,9 @@ export default {
       activeBug: computed(() => AppState.activeBug),
       notes: computed(() => AppState.notes),
       account: computed(() => AppState.account),
-      user: computed(() => AppState.user)
+      user: computed(() => AppState.user),
+      edit: false,
+      saved: false
     })
     onMounted(async() => {
       try {
@@ -106,7 +152,7 @@ export default {
       }
     })
     return {
-      route,
+      // route,
       state,
       async closeBug() {
         try {
@@ -117,7 +163,18 @@ export default {
         } catch (error) {
           Notification.toast('Error: ' + error, 'error')
         }
+      },
+      async saveEdit() {
+        try {
+          await bugsService.saveEdit(state.activeBug)
+          state.newBug = {}
+          state.edit = false
+          Notification.toast('Edit Saved!', 'success')
+        } catch (error) {
+          Notification.toast('Error: ' + error, 'error')
+        }
       }
+
     }
   },
   components: {}
@@ -133,6 +190,10 @@ export default {
   outline-color: black;
   min-height: 15rem;
 }
+.edittext{
+  min-height: 15rem;
+}
+
 .activeBug-title{
   font-size: 2.5rem;
 }
@@ -152,7 +213,7 @@ export default {
 }
 /* (B) BREAK DOWN 1 COLUMN ON SMALL SCREENS */
 @media only screen and (max-width: 768px) {
-  .content { flex-wrap: wrap; }
+  .content { display: none; }
   .flexCol { width: 100%; }
 }
 .note-tag{
@@ -160,5 +221,9 @@ export default {
 }
 .locked-scroll {
   overflow-y: scroll;
+}
+.on-mobile{
+  font-size: 1.5rem;
+  font-weight: bold;
 }
 </style>

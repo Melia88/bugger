@@ -55,12 +55,12 @@ import { useRoute } from 'vue-router'
 import $ from 'jquery'
 export default {
   name: 'CreateNoteModal',
-  props: {
-    note: {
-      type: Object,
-      required: true
-    }
-  },
+  // props: {
+  // //   note: {
+  // //     type: Object,
+  // //     required: true
+  // //   }
+  // },
   setup() {
     const route = useRoute()
     const state = reactive({

@@ -70,12 +70,12 @@ import Notification from '../utils/Notification'
 import $ from 'jquery'
 export default {
   name: 'CreateBugModalComponent',
-  props: {
-    bug: {
-      type: Object,
-      required: true
-    }
-  },
+  // props: {
+  //   bug: {
+  //     type: Object,
+  //     required: true
+  //   }
+  // },
   setup() {
     const state = reactive({
       newBug: {},

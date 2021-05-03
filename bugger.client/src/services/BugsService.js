@@ -36,9 +36,11 @@ class BugsService {
   //   this.getAllBugs()
   // }
 
-  // async editBugDetails(bug) {
-  //   await api.put('api/bugs/' + bug.id, bug.description, bug.title)
-  // }
+  async saveEdit(bug) {
+    await api.put('api/bugs/' + bug.id, bug)
+    // AppState.activeBug =
+    this.getActiveBug()
+  }
 
   async sortClosed() {
     await api.get('api/bugs')

@@ -1,5 +1,4 @@
 import { AppState } from '../AppState'
-import { logger } from '../utils/Logger'
 import { api } from './AxiosService'
 class NotesService {
   async getNotes(bugId) {
@@ -11,7 +10,7 @@ class NotesService {
   async createNote(newNote, id) {
     await api.post('api/notes', newNote)
     this.getNotes(id)
-    logger.log(newNote)
+    // logger.log(newNote)
   }
 
   async deleteNote(id, bugId) {
