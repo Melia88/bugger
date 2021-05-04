@@ -19,6 +19,7 @@
             </span>
           </div>
           <div class="div flexCol">
+            <!-- makes date and time look nice prt1 prt2 in return-->
             {{ new Date ( bug.updatedAt).toLocaleString('en', 'time') }}
           </div>
         </div>

@@ -36,7 +36,7 @@
             </div>
           </div>
 
-          <div class="form-group">
+          <div class="form-group p-3">
             <label for="description">Description</label>
             <textarea type="text"
                       class="form-control"

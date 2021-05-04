@@ -62,7 +62,7 @@
           </span>
         </div>
       </div>
-      <div class=" col-md-12 mt-3">
+      <div class=" col-md-12 mt-3 ">
         <div class="mx-4 content-box bg-white shadow locked-scroll">
           <textarea type="text"
                     v-if="state.edit && state.activeBug.closed === false && state.account.id === state.activeBug.creatorId"
