@@ -44,8 +44,10 @@
         </button>
 
         <div class="dropdown" v-else>
+          <!-- This is the logIn drop down -->
           <div
-            class="dropdown-toggle"
+            class="dropdown-toggle hoverable"
+            title="LogIn/LogOut"
             @click="state.dropOpen = !state.dropOpen"
           >
             <img
@@ -125,4 +127,5 @@ a:hover {
 .nav-item .nav-link.router-link-exact-active{
   color: var(--primary);
 }
+
 </style>
